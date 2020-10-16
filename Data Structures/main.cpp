@@ -3,20 +3,23 @@
 #include "Array.h"
 
 int main(int argc, char* argv[]) {
-  ////////////////////// Test present in function
-  ///////////// Do something with exceptions actually (not just printing a message)
   Array<int> a;
+  std::cout << a.get_present_index() << std::endl;
   a.insert_beg(5);
-  a.insert_beg(4);
-  a.insert_beg(3);
+  a.insert_end(4);
+  a.insert_beg(1);
   a.print();
-  Array<int> b(a), c;
+  Array<int> b(a);
   b.print();
-  c.insert_beg(6);
-  c.insert_beg(10);
-  b = {c};
-  b.print();
-  c.insert_end(11);
+  Array<int> c;
+  c = {b};
   c.print();
+  a.insert(1, 10);
+  a.print();
+  std::cout << a.get_present_index() << std::endl;
+  a.insert_end(14);
+  std::cout << a.get_present_index() << std::endl;
+  a.move_prev();
+  std::cout << a.get_present_index() << std::endl;
   return 0;
 }

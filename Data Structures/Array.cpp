@@ -61,22 +61,35 @@ bool Array<Type>::insert_end(const Type& datum) {
 
 template <typename Type>
 bool Array<Type>::insert(int index, const Type& datum) {
+  if (index > this->size or index < 0) {
+    return false;
+  }
   Type* copy {this->first};
+  ptrdiff_t present_index {-1};
+  if (this->first != nullptr and this->present != nullptr) {
+    present_index = {this->present - this->first};
+  }
   this->first = {nullptr};
-  ptrdiff_t present_index = this->present - this->first;
-  this->present = {nullptr}; ////////////////////////
+  this->present = {nullptr};
   ++(this->size);
-  this->first = {new Type[this->size]};
+  allocate(this->size);
   int i {0};
+  // Copy first part of array
   for (i = {0}; i < index; ++i) {
     this->first[i] = {copy[i]};
   }
+  // Copy data into index spot
   this->first[i++] = {datum};
+  // Copy last part of array
   for (; i < this->size; ++i) {
     this->first[i] = {copy[i - 1]};
   }
+  // Either first or present were nullptr so reset present
+  if (present_index == -1) {
+    this->present = {this->first};
+  }
   // If element inserted was after present, present stays the same
-  if (present_index < index) {
+  else if (present_index < index) {
     this->present = {this->first + present_index};
   }
   // Otherwise present shifts over to stay at the element it was pointing to
@@ -90,7 +103,38 @@ bool Array<Type>::insert(int index, const Type& datum) {
 /////////////////////////////
 
 template <typename Type>
-void Array<Type>::print() {
+bool Array<Type>::move_next() {
+  if (this->present == nullptr) {
+    return false;
+  }
+  ptrdiff_t present_index {this->present - this->first};
+  if (present_index == this->size - 1) {
+    return false;
+  }
+  else {
+    ++this->present;
+    return true;
+  }
+}
+
+template <typename Type>
+bool Array<Type>::move_prev() {
+  if (this->present == nullptr) {
+    return false;
+  }
+
+  ptrdiff_t present_index {this->present - this->first};
+  if (present_index == 0) {
+    return false;
+  }
+  else {
+    --this->present;
+    return true;
+  }
+}
+
+template <typename Type>
+void Array<Type>::print() const {
   std::cout << *this << '\n';
 }
 
@@ -104,7 +148,8 @@ void Array<Type>::allocate(int capacity) {
   }
   catch (const std::runtime_error& e) {
     std::cout << e.what() << '\n';
-  }  
+    exit(1);
+  }
 }
 
 template class Array<int>;
