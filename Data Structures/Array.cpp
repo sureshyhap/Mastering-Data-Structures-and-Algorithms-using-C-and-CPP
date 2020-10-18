@@ -103,6 +103,30 @@ bool Array<Type>::insert(int index, const Type& datum) {
 /////////////////////////////
 
 template <typename Type>
+Type& Array<Type>::find_kth(int index) {
+  try {
+    if (index >= this->size or index < 0) {
+      throw std::runtime_error("Invalid index");
+    }
+  }
+  catch (const std::runtime_error& e) {
+    std::cerr << e.what() << std::endl;
+    exit(1);
+  }
+  return this->first[index];
+}
+
+template <typename Type>
+int Array<Type>::find_element(const Type& datum) {
+  for (int i {0}; i < this->size; ++i) {
+    if (datum == this->first[i]) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+template <typename Type>
 bool Array<Type>::move_next() {
   if (this->present == nullptr) {
     return false;
@@ -131,6 +155,15 @@ bool Array<Type>::move_prev() {
     --this->present;
     return true;
   }
+}
+
+template <typename Type>
+bool Array<Type>::set(int index, const Type& datum) {
+  if (index >= this->size or index < 0) {
+    return false;
+  }
+  this->first[index] = {datum};
+  return true;
 }
 
 template <typename Type>

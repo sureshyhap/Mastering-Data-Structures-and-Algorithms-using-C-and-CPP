@@ -14,12 +14,12 @@ class List {
   virtual bool remove_end() = 0;
   virtual bool remove(int index) = 0;
   virtual bool remove_element(const Type& datum) = 0;
-  virtual bool find_kth(int index) = 0;
-  virtual int find_element(const Type& datum) = 0;
   */
+  virtual Type& find_kth(int index) = 0;
+  virtual int find_element(const Type& datum) = 0;
   virtual bool move_next() = 0;
   virtual bool move_prev() = 0;
-  //  virtual void set(int index, const Type& datum) = 0;
+  virtual bool set(int index, const Type& datum) = 0;
   virtual void print() const = 0;
   Type* get_first() const;
   Type* get_present() const;

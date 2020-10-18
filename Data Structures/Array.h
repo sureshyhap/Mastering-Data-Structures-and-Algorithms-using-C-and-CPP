@@ -19,13 +19,15 @@ class Array : public List<Type> {
   virtual bool remove_end();
   virtual bool remove(int index);
   virtual bool remove_element(const Type& datum);
-  virtual bool find_kth(int index);
-  virtual int find_element(const Type& datum);
   */
+  virtual Type& find_kth(int index);
+  // Linear search
+  virtual int find_element(const Type& datum);
   virtual bool move_next();
   virtual bool move_prev();
-  //  virtual void set(int index, const Type& datum);
+  virtual bool set(int index, const Type& datum);
   virtual void print() const;
+  // Also add sort function
  protected:
   virtual void allocate(int capacity);
 };

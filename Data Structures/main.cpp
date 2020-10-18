@@ -16,6 +16,10 @@ int main(int argc, char* argv[]) {
   c.print();
   a.insert(1, 10);
   a.print();
+  a.set(1, 11);
+  a.print();
+  std::cout << a.find_kth(1) << std::endl;
+  std::cout << a.find_element(11) << std::endl;
   std::cout << a.get_present_index() << std::endl;
   a.insert_end(14);
   std::cout << a.get_present_index() << std::endl;
