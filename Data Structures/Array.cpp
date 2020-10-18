@@ -175,11 +175,8 @@ template <typename Type>
 void Array<Type>::allocate(int capacity) {
   try {
     this->first = {new Type[capacity]};
-    if (this->first == nullptr) {
-      throw std::runtime_error("No more memory");
-    }
   }
-  catch (const std::runtime_error& e) {
+  catch (const std::bad_alloc& e) {
     std::cout << e.what() << '\n';
     exit(1);
   }
