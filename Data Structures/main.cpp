@@ -25,5 +25,17 @@ int main(int argc, char* argv[]) {
   std::cout << a.get_present_index() << std::endl;
   a.move_prev();
   std::cout << a.get_present_index() << std::endl;
+  a.print();
+  a.remove(3);
+  a.print();
+  std::cout << a.get_present_index() << std::endl;
+  //  a.remove_beg();
+  a.print();
+  std::cout << a.get_present_index() << std::endl;
+  //  a.remove_end();
+  a.print();
+  std::cout << a.get_present_index() << std::endl;
+  a.remove_element(5);
+  a.print();
   return 0;
 }

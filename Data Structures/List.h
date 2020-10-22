@@ -9,12 +9,10 @@ class List {
   virtual bool insert_beg(const Type& datum) = 0;
   virtual bool insert_end(const Type& datum) = 0;
   virtual bool insert(int index, const Type& datum) = 0;
-  /*
   virtual bool remove_beg() = 0;
   virtual bool remove_end() = 0;
   virtual bool remove(int index) = 0;
   virtual bool remove_element(const Type& datum) = 0;
-  */
   virtual Type& find_kth(int index) = 0;
   virtual int find_element(const Type& datum) = 0;
   virtual bool move_next() = 0;

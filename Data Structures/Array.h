@@ -14,12 +14,10 @@ class Array : public List<Type> {
   virtual bool insert_beg(const Type& datum);
   virtual bool insert_end(const Type& datum);
   virtual bool insert(int index, const Type& datum);
-  /*
   virtual bool remove_beg();
   virtual bool remove_end();
   virtual bool remove(int index);
   virtual bool remove_element(const Type& datum);
-  */
   virtual Type& find_kth(int index);
   // Linear search
   virtual int find_element(const Type& datum);

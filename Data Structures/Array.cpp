@@ -100,7 +100,53 @@ bool Array<Type>::insert(int index, const Type& datum) {
   return true;
 }
 
-/////////////////////////////
+template <typename Type>
+bool Array<Type>::remove_beg() {
+  return remove(0);
+}
+
+template <typename Type>
+bool Array<Type>::remove_end() {
+  return remove(this->size - 1);
+}
+
+template <typename Type>
+bool Array<Type>::remove(int index) {
+  if (index >= this->size or index < 0) {
+    return false;
+  }
+  Type* copy {this->first};
+  // Keeping track of present's position for later
+  ptrdiff_t present_index {this->present - this->first};
+  this->first = {new Type[--(this->size)]};
+  for (int i {0}; i < index; ++i) {
+    this->first[i] = copy[i];
+  }
+  for (int i {index}; i < this->size; ++i) {
+    this->first[i] = copy[i + 1];
+  }
+  // Present's item was removed
+  if (present_index == index) {
+    this->present = this->first;
+  }
+  // Present is unaffected if the index of the removed element
+  // is after its own
+  else if (present_index < index) {
+    this->present = this->first + present_index;
+  }
+  // Present shifts over to the left if the element
+  // removed was to its left
+  else {
+    this->present = this->first + present_index - 1;
+  }
+  delete [] copy;
+  return true;
+}
+
+template <typename Type>
+bool Array<Type>::remove_element(const Type& datum) {
+  return remove(find_element(datum));
+}
 
 template <typename Type>
 Type& Array<Type>::find_kth(int index) {
