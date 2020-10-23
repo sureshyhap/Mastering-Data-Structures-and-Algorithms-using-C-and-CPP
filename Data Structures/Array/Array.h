@@ -1,6 +1,6 @@
 #ifndef ARRAY_H
 #define ARRAY_H
-#include "List.h"
+#include "../List/List.h"
 
 template <typename Type>
 class Array : public List<Type> {
