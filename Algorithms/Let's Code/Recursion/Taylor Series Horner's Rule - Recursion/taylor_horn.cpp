@@ -5,7 +5,7 @@ long double exp(long double x, int n);
 
 int main(int argc, char* argv[]) {
   clock_t t1 = clock();
-  std::cout << exp(10, 15) << '\n';
+  std::cout << exp(2, 15) << '\n';
   clock_t t2 = clock();
   double time_diff = static_cast<double>(t2 - t1) / CLOCKS_PER_SEC;
   std::cout << time_diff << '\n';
