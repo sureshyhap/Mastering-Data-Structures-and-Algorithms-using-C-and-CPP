@@ -19,6 +19,8 @@ class List {
   virtual bool move_prev() = 0;
   virtual bool set(int index, const Type& datum) = 0;
   virtual void print() const = 0;
+  virtual void set_is_sorted() = 0;
+  virtual bool check_is_sorted() = 0;
   Type* get_first() const;
   Type* get_present() const;
   ptrdiff_t get_present_index() const;
@@ -28,6 +30,7 @@ protected:
   virtual void allocate(int capacity) = 0;
   Type* first {nullptr}, * present {nullptr};
   int size {0};
+  bool is_sorted = false;
 };
 
 template <typename Type>
@@ -44,6 +47,7 @@ template <typename Type>
 Type* List<Type>::get_present() const {
   return present;
 }
+
 
 template <typename Type>
 ptrdiff_t List<Type>::get_present_index() const {

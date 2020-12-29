@@ -9,6 +9,7 @@ class Array : public List<Type> {
  public:
   Array();
   Array(const Array<Type>& other);
+  Array(Type arr[], int n);
   Array<Type>& operator=(const Array<Type>& other);
   virtual ~Array();
   virtual bool insert_beg(const Type& datum);
@@ -19,15 +20,18 @@ class Array : public List<Type> {
   virtual bool remove(int index);
   virtual bool remove_element(const Type& datum);
   virtual Type& find_kth(int index);
-  // Linear search
   virtual int find_element(const Type& datum);
   virtual bool move_next();
   virtual bool move_prev();
   virtual bool set(int index, const Type& datum);
   virtual void print() const;
+  virtual void set_is_sorted();
+  virtual bool check_is_sorted();
   // Also add sort function
  protected:
   virtual void allocate(int capacity);
+  virtual int linear_search(const Type& datum);
+  virtual int binary_search(const Type& datum);
 };
 
 // ARRAY_H

@@ -25,6 +25,18 @@ Array<Type>::Array(const Array<Type>& other) {
   for (int i {0}; i < this->size; ++i) {
     this->first[i] = {other.first[i]};
   }
+  set_is_sorted();
+}
+
+template <typename Type>
+Array<Type>::Array(Type arr[], int n) {
+  this->first = new Type[n];
+  for (int i = 0; i < n; ++i) {
+    this->first[i] = arr[i];
+  }
+  this->present = this->first;
+  this->size = n;
+  set_is_sorted();
 }
 
 template <typename Type>
@@ -37,6 +49,7 @@ Array<Type>& Array<Type>::operator=(const Array<Type>& other) {
   for (int i {0}; i < this->size; ++i) {
     this->first[i] = {other.first[i]};
   }
+  set_is_sorted();
   return *this;
 }
 
@@ -163,12 +176,14 @@ Type& Array<Type>::find_kth(int index) {
 
 template <typename Type>
 int Array<Type>::find_element(const Type& datum) {
-  for (int i {0}; i < this->size; ++i) {
-    if (datum == this->first[i]) {
-      return i;
-    }
+  if (!this->is_sorted) {
+    std::cout << "Hello" << '\n';
+    return linear_search(datum);
   }
-  return -1;
+  else {
+    std::cout << "World" << '\n';
+    return binary_search(datum);
+  }
 }
 
 template <typename Type>
@@ -217,6 +232,23 @@ void Array<Type>::print() const {
 }
 
 template <typename Type>
+void Array<Type>::set_is_sorted() {
+  for (int i = 1; i < this->size; ++i) {
+    if (this->first[i] < this->first[i - 1]) {
+      this->is_sorted = false;
+      return;
+    }
+  }
+  this->is_sorted = true;
+  return;
+}
+
+template <typename Type>
+bool Array<Type>::check_is_sorted() {
+  return this->is_sorted;
+}
+
+template <typename Type>
 void Array<Type>::allocate(int capacity) {
   try {
     this->first = {new Type[capacity]};
@@ -224,6 +256,38 @@ void Array<Type>::allocate(int capacity) {
   catch (const std::bad_alloc& e) {
     std::cout << e.what() << '\n';
     exit(1);
+  }
+}
+
+template <typename Type>
+int Array<Type>::linear_search(const Type& datum) {
+  for (int i {0}; i < this->size; ++i) {
+    if (datum == this->first[i]) {
+      return i;
+    }
+  }
+  return -1;  
+}
+
+template <typename Type>
+int Array<Type>::binary_search(const Type& datum) {
+  int left = 0, right = this->size - 1;
+ top:
+  if (left <= right) {
+    int mid = (left + right) / 2;
+    if (this->first[mid] == datum) {
+      return mid;
+    }
+    else if (this->first[mid] < datum) {
+      left = mid + 1;
+    }
+    else {
+      right = mid - 1;
+    }
+    goto top;
+  }
+  else {
+    return -1;
   }
 }
 
