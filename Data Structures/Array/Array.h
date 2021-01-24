@@ -27,9 +27,17 @@ class Array : public List<Type> {
   virtual void print() const;
   virtual void set_is_sorted();
   virtual bool check_is_sorted();
+  virtual Type get_max();
+  virtual Type get_min();
+  virtual Type get_sum();
+  virtual double get_avg();
+  virtual void reverse();
+  virtual void left_rotate(int shift_amount);
+  virtual void right_rotate(int shift_amount);
   // Also add sort function
  protected:
   virtual void allocate(int capacity);
+  virtual inline void swap(Type& f, Type& s);
   virtual int linear_search(const Type& datum);
   virtual int binary_search(const Type& datum);
 };

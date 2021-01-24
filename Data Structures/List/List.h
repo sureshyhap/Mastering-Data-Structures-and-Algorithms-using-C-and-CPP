@@ -21,6 +21,13 @@ class List {
   virtual void print() const = 0;
   virtual void set_is_sorted() = 0;
   virtual bool check_is_sorted() = 0;
+  virtual Type get_max() = 0;
+  virtual Type get_min() = 0;
+  virtual Type get_sum() = 0;
+  virtual double get_avg() = 0;
+  virtual void reverse() = 0;
+  virtual void left_rotate(int shift_amount) = 0;
+  virtual void right_rotate(int shift_amount) = 0;
   Type* get_first() const;
   Type* get_present() const;
   ptrdiff_t get_present_index() const;
@@ -28,6 +35,7 @@ class List {
 // Also add sort function
 protected:
   virtual void allocate(int capacity) = 0;
+  virtual inline void swap(Type& f, Type& s) = 0;
   Type* first {nullptr}, * present {nullptr};
   int size {0};
   bool is_sorted = false;

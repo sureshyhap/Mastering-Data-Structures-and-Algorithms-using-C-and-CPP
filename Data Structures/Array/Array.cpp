@@ -12,7 +12,7 @@ std::ostream& operator<<(std::ostream& os, const Array<Type2>& arr) {
 
 template <typename Type>
 Array<Type>::Array() {
-
+  
 }
 
 template <typename Type>
@@ -249,6 +249,114 @@ bool Array<Type>::check_is_sorted() {
 }
 
 template <typename Type>
+Type Array<Type>::get_max() {
+  try {
+    if (!this->size) {
+      throw std::runtime_error("Empty array");
+    }
+    else if (this->is_sorted) {
+      return this->first[this->size - 1];
+    }
+    else {
+      int max_index = {0};
+      for (int i = {1}; i < this->size; ++i) {
+	if (this->first[i] > this->first[max_index]) {
+	  max_index = {i};
+	}
+      }
+      return this->first[max_index];
+    }
+  }
+  catch (const std::runtime_error& e) {
+    std::cerr << e.what();
+    exit(1);
+  }
+}
+
+template <typename Type>
+Type Array<Type>::get_min() {
+  try {
+    if (!this->size) {
+      throw std::runtime_error("Empty array");
+    }
+    else if (this->is_sorted) {
+      return this->first[0];
+    }
+    else {
+      int min_index = {0};
+      for (int i = {1}; i < this->size; ++i) {
+	if (this->first[i] < this->first[min_index]) {
+	  min_index = {i};
+	}
+      }
+      return this->first[min_index];
+    }
+  }
+  catch (const std::runtime_error& e) {
+    std::cerr << e.what();
+    exit(1);
+  }
+}
+
+template <typename Type>
+Type Array<Type>::get_sum() {
+  Type sum = {Type()};
+  for (int i = {0}; i < this->size; ++i) {
+    sum += this->first[i];
+  }
+  return sum;
+}
+
+template <typename Type>
+double Array<Type>::get_avg() {
+  if (!this->size) {
+    return Type();
+  }
+  Type sum = get_sum();
+  return static_cast<double>(sum) / this->size;
+}
+
+template <typename Type>
+void Array<Type>::reverse() {
+  for (int i = {0}; i < this->size / 2; ++i) {
+    swap(this->first[i], this->first[this->size - i - 1]);
+  }
+}
+
+template <typename Type>
+void Array<Type>::left_rotate(int shift_amount) {
+  Type* temp = new Type[this->size];
+  int j = {0};
+  for (int i = {shift_amount}; i < this->size; ++i, ++j) {
+    temp[j] = this->first[i];
+  }
+  for (int i = {0}; j < this->size; ++i, ++j) {
+    temp[j] = this->first[i];
+  }
+  for (int i = {0}; i < this->size; ++i) {
+    this->first[i] = temp[i];
+  }
+  delete [] temp;
+}
+
+template <typename Type>
+void Array<Type>::right_rotate(int shift_amount) {
+  Type* temp = new Type[this->size];
+
+  int i = {0};
+  for (int j = {shift_amount}; j < this->size; ++i, ++j) {
+    temp[j] = this->first[i];
+  }
+  for (int j = {0}; i < this->size; ++i, ++j) {
+    temp[j] = this->first[i];
+  }
+  for (int j = {0}; j < this->size; ++j) {
+    this->first[j] = temp[j];
+  }
+  delete [] temp;
+}
+
+template <typename Type>
 void Array<Type>::allocate(int capacity) {
   try {
     this->first = {new Type[capacity]};
@@ -259,6 +367,13 @@ void Array<Type>::allocate(int capacity) {
   }
 }
 
+template <typename Type>
+void Array<Type>::swap(Type& f, Type& s) {
+  Type temp = f;
+  f = s;
+  s = temp;
+}
+ 
 template <typename Type>
 int Array<Type>::linear_search(const Type& datum) {
   for (int i {0}; i < this->size; ++i) {
