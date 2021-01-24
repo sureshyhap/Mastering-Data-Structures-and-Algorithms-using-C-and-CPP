@@ -14,6 +14,7 @@ class Array : public List<Type> {
   virtual ~Array();
   virtual bool insert_beg(const Type& datum);
   virtual bool insert_end(const Type& datum);
+  virtual bool insert_into_sorted(const Type& datum);
   virtual bool insert(int index, const Type& datum);
   virtual bool remove_beg();
   virtual bool remove_end();

@@ -8,6 +8,7 @@ class List {
   virtual ~List() = 0;
   virtual bool insert_beg(const Type& datum) = 0;
   virtual bool insert_end(const Type& datum) = 0;
+  virtual bool insert_into_sorted(const Type& datum) = 0;
   virtual bool insert(int index, const Type& datum) = 0;
   virtual bool remove_beg() = 0;
   virtual bool remove_end() = 0;

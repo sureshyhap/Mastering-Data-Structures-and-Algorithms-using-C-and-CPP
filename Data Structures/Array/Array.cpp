@@ -72,8 +72,18 @@ bool Array<Type>::insert_end(const Type& datum) {
 }
 
 template <typename Type>
+bool Array<Type>::insert_into_sorted(const Type& datum) {
+  if (!this->is_sorted) {
+    return false;
+  }
+  else {
+    insert(-1, datum);
+  }
+}
+
+template <typename Type>
 bool Array<Type>::insert(int index, const Type& datum) {
-  if (index > this->size or index < 0) {
+  if (index > this->size or (index < 0 and index != -1)) {
     return false;
   }
   Type* copy {this->first};
@@ -85,10 +95,19 @@ bool Array<Type>::insert(int index, const Type& datum) {
   this->present = {nullptr};
   ++(this->size);
   allocate(this->size);
+  // index == -1 means insert datum into a sorted list
   int i {0};
-  // Copy first part of array
-  for (i = {0}; i < index; ++i) {
-    this->first[i] = {copy[i]};
+  if (index == -1) {
+    while (datum >= copy[i]) {
+      this->first[i] = {copy[i]};
+      ++i;
+    }
+  }
+  else {
+    // Copy first part of array
+    for (i = {0}; i < index; ++i) {
+      this->first[i] = {copy[i]};
+    }
   }
   // Copy data into index spot
   this->first[i++] = {datum};
