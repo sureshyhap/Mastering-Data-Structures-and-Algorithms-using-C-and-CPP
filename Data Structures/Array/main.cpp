@@ -2,12 +2,16 @@
 #include "Array.h"
 
 int main(int argc, char* argv[]) {
-  int a[] = {4, 7, 3, 1, 4};
+  int a[] = {4, 7, 13, 21, 24};
   int b[] = {1, 3, 6, 7, 8};
   Array<int> arr1(a, 5), arr2(b, 5);
   std::cout << std::boolalpha;
+  arr1.merge_sorted(arr2);
+  arr1.print();
+  /*
   arr2.insert_into_sorted(2);
   arr2.print();
+  */
   /*
   std::cout << arr1.get_min() << '\n';
   std::cout << arr2.get_min() << '\n';

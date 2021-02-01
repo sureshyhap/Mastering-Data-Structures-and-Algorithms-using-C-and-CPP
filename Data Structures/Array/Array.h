@@ -27,7 +27,7 @@ class Array : public List<Type> {
   virtual bool set(int index, const Type& datum);
   virtual void print() const;
   virtual void set_is_sorted();
-  virtual bool check_is_sorted();
+  virtual bool check_is_sorted() const;
   virtual Type get_max();
   virtual Type get_min();
   virtual Type get_sum();
@@ -35,6 +35,7 @@ class Array : public List<Type> {
   virtual void reverse();
   virtual void left_rotate(int shift_amount);
   virtual void right_rotate(int shift_amount);
+  virtual bool merge_sorted(const List<Type>& other);
   // Also add sort function
  protected:
   virtual void allocate(int capacity);

@@ -21,7 +21,7 @@ class List {
   virtual bool set(int index, const Type& datum) = 0;
   virtual void print() const = 0;
   virtual void set_is_sorted() = 0;
-  virtual bool check_is_sorted() = 0;
+  virtual bool check_is_sorted() const = 0;
   virtual Type get_max() = 0;
   virtual Type get_min() = 0;
   virtual Type get_sum() = 0;
@@ -29,6 +29,7 @@ class List {
   virtual void reverse() = 0;
   virtual void left_rotate(int shift_amount) = 0;
   virtual void right_rotate(int shift_amount) = 0;
+  virtual bool merge_sorted(const List<Type>& other) = 0;
   Type* get_first() const;
   Type* get_present() const;
   ptrdiff_t get_present_index() const;

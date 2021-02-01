@@ -77,7 +77,7 @@ bool Array<Type>::insert_into_sorted(const Type& datum) {
     return false;
   }
   else {
-    insert(-1, datum);
+    return insert(-1, datum);
   }
 }
 
@@ -263,7 +263,7 @@ void Array<Type>::set_is_sorted() {
 }
 
 template <typename Type>
-bool Array<Type>::check_is_sorted() {
+bool Array<Type>::check_is_sorted() const {
   return this->is_sorted;
 }
 
@@ -373,6 +373,41 @@ void Array<Type>::right_rotate(int shift_amount) {
     this->first[j] = temp[j];
   }
   delete [] temp;
+}
+
+template <typename Type>
+bool Array<Type>::merge_sorted(const List<Type>& other) {
+  // If either of the arrays are not sorted, cannot perform merge
+  if (!this->is_sorted or !other.check_is_sorted()) {
+    return false;
+  }
+  Type* result = new Type[this->size + other.get_size()];
+  int i = 0, j = 0, k = 0;
+  for (; i < this->size and j < other.get_size(); ) {
+    if (this->first[i] <= other.get_first()[j]) {
+      result[k++] = this->first[i++];
+    }
+    else {
+      result[k++] = other.get_first()[j++];
+    }
+  }
+  if (i == this->size) {
+    while (j < other.get_size()) {
+      result[k++] = other.get_first()[j++];
+    }
+  }
+  else if (j == other.get_size()) {
+    while (i < this->size) {
+      result[k++] = this->first[i++];
+    }
+  }
+  delete [] this->first;
+  this->first = nullptr;
+  this->present = nullptr;
+  this->size += other.get_size();
+  this->is_sorted = true;
+  this->first = result;
+  return true;
 }
 
 template <typename Type>
