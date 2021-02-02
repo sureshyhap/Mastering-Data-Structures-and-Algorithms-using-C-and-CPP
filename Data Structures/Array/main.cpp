@@ -2,12 +2,24 @@
 #include "Array.h"
 
 int main(int argc, char* argv[]) {
-  int a[] = {4, 7, 13, 21, 24};
-  int b[] = {1, 3, 6, 7, 8};
-  Array<int> arr1(a, 5), arr2(b, 5);
+  int a[] = {4, 7, 13, 4, 13, 21, 24};
+  int b[] = {1, 13, 6, 24, 13, 7, 8};
+  Array<int> arr1(a, 7), arr2(b, 7);
   std::cout << std::boolalpha;
+  List<int>* p_arr3 = arr1.intersection_list(arr2);
+  p_arr3->print();
+  /*
+  List<int>* p_arr3 = new Array<int>(*(arr1.union_list(arr2)));
+  p_arr3->print();
+  */
+  /*
+  Array<int> arr3(*(arr1.to_set()));
+  arr3.print();
+  */
+  /*
   arr1.merge_sorted(arr2);
   arr1.print();
+  */
   /*
   arr2.insert_into_sorted(2);
   arr2.print();

@@ -8,7 +8,7 @@ class Array : public List<Type> {
   friend std::ostream& operator<<(std::ostream& os, const Array<Type2>& arr);
  public:
   Array();
-  Array(const Array<Type>& other);
+  Array(const List<Type>& other);
   Array(Type arr[], int n);
   Array<Type>& operator=(const Array<Type>& other);
   virtual ~Array();
@@ -36,6 +36,9 @@ class Array : public List<Type> {
   virtual void left_rotate(int shift_amount);
   virtual void right_rotate(int shift_amount);
   virtual bool merge_sorted(const List<Type>& other);
+  virtual List<Type>* to_set() const;
+  virtual List<Type>* union_list(const List<Type>& other);
+  virtual List<Type>* intersection_list(const List<Type>& other);
   // Also add sort function
  protected:
   virtual void allocate(int capacity);

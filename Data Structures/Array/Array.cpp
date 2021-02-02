@@ -16,14 +16,14 @@ Array<Type>::Array() {
 }
 
 template <typename Type>
-Array<Type>::Array(const Array<Type>& other) {
+Array<Type>::Array(const List<Type>& other) {
   delete [] this->first;
   this->first = {nullptr};
-  allocate(other.size);
+  allocate(other.get_size());
   this->present = {this->first};
-  this->size = {other.size};
+  this->size = {other.get_size()};
   for (int i {0}; i < this->size; ++i) {
-    this->first[i] = {other.first[i]};
+    this->first[i] = {other.get_first()[i]};
   }
   set_is_sorted();
 }
@@ -408,6 +408,77 @@ bool Array<Type>::merge_sorted(const List<Type>& other) {
   this->is_sorted = true;
   this->first = result;
   return true;
+}
+
+template <typename Type>
+List<Type>* Array<Type>::to_set() const {
+  if (!this->size) {
+    return nullptr;
+  }
+  Type* temp = new Type[this->size];
+  temp[0] = this->first[0];
+  int temp_size = 1;
+  bool found = false;
+  for (int i = 1; i < this->size; ++i) {
+    for (int j = 0; j < temp_size; ++j) {
+      if (temp[j] == this->first[i]) {
+	found = true;
+	break;
+      }
+    }
+    if (!found) {
+      temp[temp_size++] = this->first[i];
+    }
+    else {
+      found = false;
+    }
+  }
+  Type* temp2 = new Type[temp_size];
+  for (int i = 0; i < temp_size; ++i) {
+    temp2[i] = temp[i];
+  }
+  delete [] temp;
+  List<Type>* result = new Array<Type>(temp2, temp_size);
+  return result;
+}
+
+template <typename Type>
+List<Type>* Array<Type>::union_list(const List<Type>& other) {
+  int total = this->get_size() + other.get_size();
+  Type* temp = new Type[total];
+  for (int i = 0; i < this->get_size(); ++i) {
+    temp[i] = this->get_first()[i];
+  }
+  for (int i = 0; i < other.get_size(); ++i) {
+    temp[this->get_size() + i] = other.get_first()[i];
+  }
+  Array<Type> t(temp, total);
+  return t.to_set();
+}
+
+template <typename Type>
+List<Type>* Array<Type>::intersection_list(const List<Type>& other) {
+  if (!this->get_size() or !other.get_size()) {
+    return nullptr;
+  }
+  int bigger_size = ((this->get_size() > other.get_size()) ? this->get_size() : other.get_size());
+  Type* temp = new Type[bigger_size];
+  int temp_size = 0;
+  for (int i = 0; i < this->get_size(); ++i) {
+    for (int j = 0; j < other.get_size(); ++j) {
+      if (this->get_first()[i] == other.get_first()[j]) {
+	temp[temp_size++] = this->get_first()[i];
+	break;
+      }
+    }
+  }
+  Type* temp2 = new Type[temp_size];
+  for (int i = 0; i < temp_size; ++i) {
+    temp2[i] = temp[i];
+  }
+  delete [] temp;
+  List<Type>* temp2_obj = new Array<Type>(temp2, temp_size);
+  return temp2_obj->to_set();
 }
 
 template <typename Type>
