@@ -33,6 +33,7 @@ class List {
   virtual List<Type>* to_set() const = 0;
   virtual List<Type>* union_list(const List<Type>& other) = 0;
   virtual List<Type>* intersection_list(const List<Type>& other) = 0;
+  virtual List<Type>* difference_list(const List<Type>& other) = 0;
   Type* get_first() const;
   Type* get_present() const;
   ptrdiff_t get_present_index() const;

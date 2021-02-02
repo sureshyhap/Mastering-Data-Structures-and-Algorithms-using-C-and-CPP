@@ -6,7 +6,7 @@ int main(int argc, char* argv[]) {
   int b[] = {1, 13, 6, 24, 13, 7, 8};
   Array<int> arr1(a, 7), arr2(b, 7);
   std::cout << std::boolalpha;
-  List<int>* p_arr3 = arr1.intersection_list(arr2);
+  List<int>* p_arr3 = arr1.difference_list(arr2);
   p_arr3->print();
   /*
   List<int>* p_arr3 = new Array<int>(*(arr1.union_list(arr2)));

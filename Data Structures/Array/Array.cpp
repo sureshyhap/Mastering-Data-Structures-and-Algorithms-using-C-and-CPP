@@ -482,6 +482,47 @@ List<Type>* Array<Type>::intersection_list(const List<Type>& other) {
 }
 
 template <typename Type>
+List<Type>* Array<Type>::difference_list(const List<Type>& other) {
+
+
+
+
+  if (!this->get_size() or !other.get_size()) {
+    return nullptr;
+  }
+  int bigger_size = ((this->get_size() > other.get_size()) ? this->get_size() : other.get_size());
+  Type* temp = new Type[bigger_size];
+  int temp_size = 0;
+  bool found = false;
+  for (int i = 0; i < this->get_size(); ++i) {
+    for (int j = 0; j < other.get_size(); ++j) {
+      if (this->get_first()[i] == other.get_first()[j]) {
+	found = true;
+	break;
+      }
+    }
+    if (!found) {
+      temp[temp_size++] = this->get_first()[i];
+    }
+    else {
+      found = false;
+    }
+  }
+  Type* temp2 = new Type[temp_size];
+  for (int i = 0; i < temp_size; ++i) {
+    temp2[i] = temp[i];
+  }
+  delete [] temp;
+  List<Type>* temp2_obj = new Array<Type>(temp2, temp_size);
+  return temp2_obj->to_set();
+
+
+
+
+  
+}
+
+template <typename Type>
 void Array<Type>::allocate(int capacity) {
   try {
     this->first = {new Type[capacity]};
